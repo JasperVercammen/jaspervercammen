@@ -16,6 +16,6 @@ Here are some ideas to get you started:
 -->
 
 
-[![Jasper Vercammen's GitHub stats](https://github-readme-stats.vercel.app/api?username=jaspervercammen)](https://github.com/anuraghazra/github-readme-stats)
+[![Jasper Vercammen's GitHub stats](https://github-readme-stats.vercel.app/api?username=jaspervercammen&show_icons=true&theme=radical)](https://github.com/anuraghazra/github-readme-stats)
 ![Jasper Vercammen's Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=jaspervercammen&size_weight=0.5&count_weight=0.5)
 
