@@ -534,6 +534,8 @@ p {
 /* ── projects ─────────────────────────────────────────────────────────── */
 
 .project-card {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -566,9 +568,24 @@ p {
 }
 
 .project-card__star {
-  margin-left: 9px;
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(calc(-50% - 25px));
   color: var(--accent);
-  font-size: 14px;
+  font-size: 190px;
+  line-height: 1;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.project-card:hover .project-card__star,
+.project-card:focus-visible .project-card__star {
+  opacity: 0.28;
+}
+
+.project-card__main {
+  position: relative;
 }
 
 .legend {

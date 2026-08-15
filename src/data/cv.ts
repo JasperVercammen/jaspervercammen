@@ -60,10 +60,20 @@ export const SKILLS = [
   'Javascript / Typescript',
   'React',
   'React Native',
+  'Expo',
   'HTML / (s)css',
+  'State management',
+  'Design systems',
+  'Native modules & BLE',
+  'Accessibility (WCAG)',
+  'Testing & E2E',
+  'Performance tuning',
   'Git',
   'Devops',
   'Application Architecture',
+  'AI-assisted development',
+  'Technical leadership',
+  'Regulated environments',
 ]
 
 export const EDUCATION = [
@@ -71,4 +81,4 @@ export const EDUCATION = [
   { degree: 'Prof. Bachelor — Elektronica-ICT', school: 'Thomas More · De Nayer Instituut — completed 2011' },
 ]
 
-export const QUICK_FACTS = 'Married · Father of 2 · Runner · Sports lover'
+export const QUICK_FACTS = 'Married · Father of 2 · Runner · Hobby renovator · Sports lover'
