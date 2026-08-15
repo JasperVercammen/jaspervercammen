@@ -20,7 +20,7 @@ export function CaseStudy({ project, onClose }: Props) {
 
       <div className="case-study__head">
         <h2 className="case-study__title">{project.title}</h2>
-        <div className="case-study__role">{project.role}</div>
+        {project.role && <div className="case-study__role">{project.role}</div>}
         <div className="built-at">
           <span className="built-at__label">built at</span>
           <div
@@ -42,15 +42,19 @@ export function CaseStudy({ project, onClose }: Props) {
         )}
       </div>
 
-      <div className="cs-block">
-        <h3 className="label">What</h3>
-        <p className="cs-block__body">{project.what}</p>
-      </div>
+      {project.what && (
+        <div className="cs-block">
+          <h3 className="label">What</h3>
+          <p className="cs-block__body">{project.what}</p>
+        </div>
+      )}
 
-      <div className="cs-block">
-        <h3 className="label">Tasks &amp; responsibilities</h3>
-        <p className="cs-block__body">{project.tasks}</p>
-      </div>
+      {project.tasks && (
+        <div className="cs-block">
+          <h3 className="label">Tasks &amp; responsibilities</h3>
+          <p className="cs-block__body">{project.tasks}</p>
+        </div>
+      )}
 
       {project.more && (
         <div className="cs-block">
@@ -76,16 +80,18 @@ export function CaseStudy({ project, onClose }: Props) {
         </div>
       )}
 
-      <div className="cs-stack">
-        <h3 className="label">Stack</h3>
-        <div className="chip-row">
-          {project.stack.map((item) => (
-            <span key={item} className="chip chip--accent">
-              {item}
-            </span>
-          ))}
+      {project.stack && (
+        <div className="cs-stack">
+          <h3 className="label">Stack</h3>
+          <div className="chip-row">
+            {project.stack.map((item) => (
+              <span key={item} className="chip chip--accent">
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }

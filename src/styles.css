@@ -556,6 +556,13 @@ p {
   transform: translateX(4px);
 }
 
+.project-card--stub,
+.project-card--stub:hover {
+  border-color: var(--line);
+  transform: none;
+  cursor: default;
+}
+
 .project-card__main {
   display: flex;
   flex-direction: column;
