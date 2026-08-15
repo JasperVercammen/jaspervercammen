@@ -6,8 +6,8 @@ import mijnAntwerpen1 from '../assets/mijn-antwerpen-1.webp'
 import mijnAntwerpen2 from '../assets/mijn-antwerpen-2.webp'
 import mijnAntwerpen3 from '../assets/mijn-antwerpen-3.webp'
 import mijnAntwerpen4 from '../assets/mijn-antwerpen-4.webp'
-import adminnoPortfolio from '../assets/adminno-portfolio.png'
-import adminnoAgenda from '../assets/adminno-agenda.png'
+import adminnoPortfolio from '../assets/adminno-portfolio.webp'
+import adminnoAgenda from '../assets/adminno-agenda.webp'
 
 export {
   pixelJasper,

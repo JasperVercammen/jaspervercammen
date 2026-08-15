@@ -15,9 +15,8 @@ export type Job = {
   company: string
   role: string
   dates: string
-  body: string
+  body: string[]
   current?: boolean
-  link?: { label: string; href: string }
 }
 
 export const EXPERIENCE: Job[] = [
@@ -26,29 +25,34 @@ export const EXPERIENCE: Job[] = [
     role: 'Senior frontend developer',
     dates: '2025 – ongoing',
     current: true,
-    body: 'Appointed to lead the technical overhaul of Minze’s React Native apps. Successfully migrated legacy codebases to modern architectures while maintaining a rapid release cycle. Balanced the delivery of new business requirements with essential refactoring to ensure long-term stability and scalability, all within a highly regulated compliance environment.',
-    link: {
-      label: 'Minze Therapy on Google Play',
-      href: 'https://play.google.com/store/apps/details?id=com.minze.therapy&hl=en',
-    },
+    body: [
+      'Appointed to lead the technical overhaul of Minze’s React Native apps. Successfully migrated legacy codebases to modern architectures while maintaining a rapid release cycle. Balanced the delivery of new business requirements with essential refactoring to ensure long-term stability and scalability, all within a highly regulated compliance environment.',
+      'Over the past year the team reshaped how we design and build: planning moved from Jira to Linear, AI became a daily part of the workflow — from shaping a ticket to reviewing a pull request — and we brought the platform up to the BSI security standard that medical software has to meet.',
+    ],
   },
   {
     company: 'icapps · Antwerp',
     role: 'Senior frontend developer',
     dates: '2015 – 2024',
-    body: 'At icapps, I transitioned from a junior developer to a frontend specialist, honing my skills in writing clean, efficient code. I contributed my expertise to support the team’s direction and consistently provided assistance to colleagues, fostering a collaborative environment.',
+    body: [
+      'At icapps, I transitioned from a junior developer to a frontend specialist, honing my skills in writing clean, efficient code. I contributed my expertise to support the team’s direction and consistently provided assistance to colleagues, fostering a collaborative environment.',
+    ],
   },
   {
     company: 'VisionLine · Sint-Katelijne-Waver',
     role: 'Full stack developer',
     dates: '2013 – 2015',
-    body: 'Worked at VisionLine, a startup in the real estate sector, where I developed and maintained in-house B2B software and various web applications. Primarily responsible for backend development and frontend integration using PHP, JavaScript, and MySQL. Collaborated closely with a small team to deliver efficient, tailored solutions.',
+    body: [
+      'Worked at VisionLine, a startup in the real estate sector, where I developed and maintained in-house B2B software and various web applications. Primarily responsible for backend development and frontend integration using PHP, JavaScript, and MySQL. Collaborated closely with a small team to deliver efficient, tailored solutions.',
+    ],
   },
   {
     company: 'Sakti · Lier',
     role: 'Owner — Frontend development',
-    dates: '2012 – current',
-    body: 'Founded Sakti as a student to provide professional web development services for small businesses, allowing me to manage client projects and issue invoices. Over the years, I’ve continued to maintain these websites, using the business as a platform to learn and experiment with new technologies in a professional context.',
+    dates: '2012 – ongoing',
+    body: [
+      'Founded Sakti as a student to provide professional web development services for small businesses, allowing me to manage client projects and issue invoices. Over the years, I’ve continued to maintain these websites, using the business as a platform to learn and experiment with new technologies in a professional context.',
+    ],
   },
 ]
 
@@ -56,10 +60,20 @@ export const SKILLS = [
   'Javascript / Typescript',
   'React',
   'React Native',
+  'Expo',
   'HTML / (s)css',
+  'State management',
+  'Design systems',
+  'Native modules & BLE',
+  'Accessibility (WCAG)',
+  'Testing & E2E',
+  'Performance tuning',
   'Git',
   'Devops',
   'Application Architecture',
+  'AI-assisted development',
+  'Technical leadership',
+  'Regulated environments',
 ]
 
 export const EDUCATION = [
@@ -67,4 +81,4 @@ export const EDUCATION = [
   { degree: 'Prof. Bachelor — Elektronica-ICT', school: 'Thomas More · De Nayer Instituut — completed 2011' },
 ]
 
-export const QUICK_FACTS = 'Married · Father of 2 · Runner · Sports lover'
+export const QUICK_FACTS = 'Married · Father of 2 · Runner · Hobby renovator · Sports lover'
