@@ -1,0 +1,79 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deploy at a time: FTP-Deploy-Action keeps a sync-state file on the
+# server, and concurrent runs would race on it. Queue instead of cancelling,
+# so a half-uploaded deploy always gets finished by the next run.
+concurrency:
+  group: ftp-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Runs `tsc -b` first, so a type error fails the build before we upload.
+      - name: Build
+        run: npm run build
+
+      - name: Upload build output as workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 14
+          if-no-files-found: error
+
+      # Pull requests build and typecheck only — nothing leaves the runner.
+      - name: Check FTP credentials are configured
+        if: github.event_name != 'pull_request'
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=""
+          [ -z "$FTP_SERVER" ] && missing="$missing FTP_SERVER"
+          [ -z "$FTP_USERNAME" ] && missing="$missing FTP_USERNAME"
+          [ -z "$FTP_PASSWORD" ] && missing="$missing FTP_PASSWORD"
+          if [ -n "$missing" ]; then
+            echo "::error::Missing repository secrets:$missing — add them under Settings › Secrets and variables › Actions."
+            exit 1
+          fi
+
+      - name: Deploy to FTP
+        if: github.event_name != 'pull_request'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # ftps is the default. Override with the FTP_PROTOCOL variable if the
+          # host needs plain `ftp` or `ftps-legacy` (implicit FTPS on port 990).
+          protocol: ${{ vars.FTP_PROTOCOL || 'ftps' }}
+          port: ${{ vars.FTP_PORT || 21 }}
+          local-dir: ./dist/
+          # Path on the server, relative to the login directory. Trailing slash
+          # required. Defaults to the FTP root — set FTP_SERVER_DIR to e.g.
+          # `public_html/` if your host drops you a level above the web root.
+          server-dir: ${{ vars.FTP_SERVER_DIR || './' }}
