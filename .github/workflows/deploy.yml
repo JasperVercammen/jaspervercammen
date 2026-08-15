@@ -3,8 +3,9 @@ name: Build and deploy
 on:
   push:
     branches: [main]
+  # Unfiltered on purpose: build every PR, including ones stacked on a
+  # branch other than main. Deploy stays gated on the event below.
   pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
