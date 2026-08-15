@@ -11,14 +11,11 @@ export function Experience({ revealed }: { revealed: boolean }) {
             <span className="job__role">{job.role}</span>
             <span className="job__dates">{job.dates}</span>
           </div>
-          <p className="job__body">{job.body}</p>
-          {job.link && (
-            <div className="job__links">
-              <a className="link" href={job.link.href} target="_blank" rel="noreferrer">
-                {job.link.label} ↗
-              </a>
-            </div>
-          )}
+          {job.body.map((paragraph) => (
+            <p key={paragraph} className="job__body">
+              {paragraph}
+            </p>
+          ))}
         </article>
       ))}
     </Section>

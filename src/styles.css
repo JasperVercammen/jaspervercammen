@@ -527,15 +527,6 @@ p {
   line-height: 1.7;
 }
 
-.job__links {
-  display: flex;
-  gap: 18px;
-}
-
-.job__links a {
-  font-size: 12.5px;
-}
-
 .link {
   border-bottom: 1px solid currentColor;
 }
@@ -572,6 +563,26 @@ p {
 .project-card__title {
   color: var(--ink);
   font-size: 15px;
+}
+
+.project-card__star {
+  margin-left: 9px;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.legend {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding-top: 4px;
+  color: var(--soft);
+  font-size: 12.5px;
+}
+
+.legend__star {
+  color: var(--accent);
+  font-size: 14px;
 }
 
 .project-card__tagline {

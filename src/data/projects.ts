@@ -16,6 +16,7 @@ export type Project = {
   role: string
   company: CompanyId
   years?: string
+  highlight?: boolean
   what: string
   tasks: string
   more?: string
@@ -33,6 +34,7 @@ export const PROJECTS: Project[] = [
     tag: 'React Native · lead',
     role: 'React Native — Lead frontend developer',
     company: 'icapps',
+    highlight: true,
     what: 'With this app residents of Antwerp can make appointments, request documents and send messages to the city, save points and exchange them for benefits, discover interesting activities, consult a map with important locations in the city and receive relevant updates (news, appointments, reminders, …).',
     tasks:
       'Front-end development. Architecture of the application. Designing and setup of the CI/CD. Integration of an authentication system throughout the application and in multiple webviews in the app. Make it secure and robust. WCAG AA implementation.',
@@ -96,6 +98,7 @@ export const PROJECTS: Project[] = [
     tag: 'React Native · lead',
     role: 'React Native — Lead frontend developer',
     company: 'Minze Health',
+    highlight: true,
     what: 'A hardware-connected companion app built with Expo, talking to the device over Bluetooth Low Energy, with Skia-driven visuals.',
     tasks:
       'Front-end development. Architecture of the application. Designing and setup of the CI/CD. Move from Jenkins to GitHub Actions. Migration from existing redux/sagas to more modern approach. Stabilize bluetooth connection with the hardware side. Make it secure and robust.',
@@ -110,6 +113,7 @@ export const PROJECTS: Project[] = [
     role: 'PHP — Lead developer, frontend & backend',
     company: 'VisionLine',
     years: '2013 – 2015',
+    highlight: true,
     what: 'Adminno4pro is a real-estate management package tailored to commercial property. With the Adminno4pro package you can effortlessly manage your agency’s portfolio. Various handy features such as the agenda, task management, prospecting functions and more make it possible to organize your administration effortlessly.',
     tasks:
       'Design and development of new features. Maintenance of the existing web app. Responsible for, among other things, implementing a custom agenda and a full-featured todo list. Extending existing features from A to Z (from database to frontend development).',
