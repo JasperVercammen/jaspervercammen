@@ -81,6 +81,7 @@ export const PROJECTS: Project[] = [
     role: 'React & React Native — Frontend developer',
     company: 'icapps',
     years: '2016 – 2017, 2023',
+    highlight: true,
     what: 'We replace the complete native banking application of Keytrade. The project included a POC with basic functionalities, redesign from scratch and provided native bridges for Vasco. The app comes with graphs, gestures and performance optimisations all in React Native. It’s also tablet ready. The project was rounded in about 1 year.',
     tasks:
       'Front-end development. Architecture of the application and data flow/management in the app. Implemented several security functions. Native module bridging.',
