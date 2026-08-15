@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #eee7d9; }
+  a { color: oklch(0.58 0.14 18); text-decoration: none; }
+  a:hover { color: oklch(0.45 0.14 18); }
+  @keyframes blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+  @keyframes riseIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .traffic-lights button svg { opacity: 0; transition: opacity 0.12s ease; }
+  .traffic-lights:hover button svg { opacity: 1; }
+</style>
+<script src="./image-slot.js"></script>
+</helmet>
+<div ref="{{ rootRef }}" data-screen-label="Desk" style="--bg: #faf6ef; --desk: #eee7d9; --code-bg: #f4eee1; --ink: #1c1712; --muted: #6f6455; --soft: #a3937c; --line: #e7ddcd; --card: #ffffff; --accent: oklch(0.55 0.14 18); --accent-soft: oklch(0.6 0.14 18 / 0.08); --accent-line: oklch(0.6 0.14 18 / 0.3); --code-text: #3d3427; --chipline: #d8cbb4; --hero-size: 64px; --pane-pad: 48px 56px; --desk-pad: 20px; --win-w: 1600px; --win-h: auto; --win-align: stretch; --win-radius: 16px; --win-border: 1px solid #e7ddcd; --win-shadow: 0 18px 60px rgba(28, 23, 18, 0.12); --split-dir: row; --term-order: 0; --term-w: 40%; --term-max: 520px; --term-h: auto; --term-br: 1px solid #e7ddcd; --term-bt: none; --term-cursor: default; height: 100vh; display: flex; justify-content: center; background: var(--desk); padding: var(--desk-pad); box-sizing: border-box; font-family: 'IBM Plex Mono', monospace; transition: background 0.3s ease; overflow: hidden;">
+
+  <sc-if value="{{ minimized }}" hint-placeholder-val="{{ false }}">
+    <button onClick="{{ restoreWin }}" style="align-self: flex-end; margin: 0 auto; background: var(--code-bg); border: 1px solid var(--line); border-radius: 12px 12px 0 0; color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 14px 26px; cursor: pointer;" style-hover="color: var(--accent); border-color: var(--accent)">▁ jasper.tsx — minimized · restore()</button>
+  </sc-if>
+  <sc-if value="{{ closed }}" hint-placeholder-val="{{ false }}">
+    <div style="align-self: center; text-align: center; color: var(--soft); font-size: 13px; display: flex; flex-direction: column; gap: 14px;">
+      <span>// you closed the portfolio without contacting me.</span>
+      <button onClick="{{ restoreWin }}" style="background: none; border: none; color: var(--soft); font-family: 'IBM Plex Mono', monospace; font-size: 13px; cursor: pointer; opacity: 0.6;" style-hover="opacity: 1; color: var(--accent)">restore()</button>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showWindow }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Window" style="width: 100%; max-width: var(--win-w); height: var(--win-h); align-self: var(--win-align); display: flex; flex-direction: column; background: var(--bg); border: var(--win-border); border-radius: var(--win-radius); box-shadow: var(--win-shadow); overflow: hidden; position: relative; transition: max-width 0.4s ease, background 0.3s ease;">
+
+      <sc-if value="{{ showChrome }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; align-items: center; padding: 12px 20px; border-bottom: 1px solid var(--line); flex: none;">
+          <div class="traffic-lights" style="display: flex; gap: 8px; width: 72px;">
+            <button onClick="{{ askClose }}" title="close" style="width: 14px; height: 14px; border-radius: 50%; background: #ff5f57; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;"><svg width="8" height="8" viewBox="0 0 8 8" style="display: block;"><path d="M1.2 1.2 L6.8 6.8 M6.8 1.2 L1.2 6.8" stroke="rgba(77, 0, 0, 0.65)" stroke-width="1.6" stroke-linecap="round"></path></svg></button>
+            <button onClick="{{ minimizeWin }}" title="minimize" style="width: 14px; height: 14px; border-radius: 50%; background: #febc2e; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;"><svg width="8" height="8" viewBox="0 0 8 8" style="display: block;"><path d="M1 4 L7 4" stroke="rgba(90, 60, 0, 0.7)" stroke-width="1.6" stroke-linecap="round"></path></svg></button>
+            <button onClick="{{ greenToggle }}" title="toggle mobile size" style="width: 14px; height: 14px; border-radius: 50%; background: #28c840; border: none; cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;"><svg width="8" height="8" viewBox="0 0 8 8" style="display: block;"><path d="{{ greenIconPath }}" fill="rgba(0, 70, 10, 0.7)"></path></svg></button>
+          </div>
+          <div style="flex: 1; display: flex; justify-content: center;">
+            <span style="background: var(--desk); border: 1px solid var(--line); color: var(--soft); font-size: 12px; padding: 5px 16px; border-radius: 999px;">jasper.dev — {{ winTitle }}</span>
+          </div>
+          <div style="width: 72px;"></div>
+        </div>
+      </sc-if>
+
+      <div style="flex: 1; min-height: 0; display: flex; flex-direction: var(--split-dir);">
+        <div data-screen-label="Terminal" style="order: var(--term-order); width: var(--term-w); max-width: var(--term-max); height: var(--term-h); min-width: 0; background: var(--code-bg); border-right: var(--term-br); border-top: var(--term-bt); display: flex; flex-direction: column; flex: none; box-sizing: border-box; transition: background 0.3s ease, height 0.3s ease;">
+          <div onClick="{{ termHeaderClick }}" style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-bottom: 1px solid var(--line); flex: none; cursor: var(--term-cursor);">
+            <span style="color: var(--muted); font-size: 12.5px;">jasper.tsx — live session</span>
+            <button onClick="{{ toggleTheme }}" style="margin-left: auto; background: none; border: 1px solid var(--chipline); color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 6px 13px; border-radius: 7px; cursor: pointer;" style-hover="border-color: var(--accent); color: var(--accent)">{{ themeLabel }}</button>
+          </div>
+          <div style="height: 3px; background: var(--line); flex: none;"><div ref="{{ progressRef }}" style="width: 0%; height: 100%; background: var(--accent); transition: width 0.15s linear;"></div></div>
+          <div ref="{{ codeBoxRef }}" onClick="{{ skip }}" title="Click to fast-forward" style="flex: 1; min-height: 0; overflow-y: auto; padding: 24px 28px; cursor: pointer;">
+            <pre style="margin: 0; font-family: 'IBM Plex Mono', monospace; font-size: 13.5px; line-height: 1.75; color: var(--code-text); white-space: pre-wrap;"><span ref="{{ typeRef }}"></span><span style="display: inline-block; width: 8px; height: 16px; background: var(--accent); vertical-align: text-bottom; animation: blink 1.1s step-end infinite;"></span></pre>
+          </div>
+        </div>
+
+        <div data-screen-label="Content" style="order: 1; flex: 1; min-width: 0; min-height: 0; position: relative; display: flex; flex-direction: column;">
+          <div ref="{{ paneRef }}" style="flex: 1; min-height: 0; overflow-y: auto; padding: var(--pane-pad); box-sizing: border-box; display: flex; flex-direction: column; gap: 40px;">
+            <div data-reveal="hero" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 16px;">
+              <div style="font-family: 'Instrument Serif', serif; font-size: var(--hero-size); color: var(--ink); line-height: 1.02;">Jasper Vercammen</div>
+              <div style="color: var(--accent); font-size: 15px;">Senior Frontend Developer — web &amp; mobile · Lier, Belgium</div>
+            </div>
+
+            <div data-reveal="profile" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 14px; max-width: 720px;">
+              <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">Profile</div>
+              <div style="color: var(--muted); font-size: 14.5px; line-height: 1.75;">
+                <img src="pixel-jasper.png" alt="Pixel-art Jasper holding a laptop" style="height: 150px; width: auto; image-rendering: pixelated; float: right; margin: 4px 0 16px 20px;">
+                <span style="display: block; margin-bottom: 14px;">I have extensive experience in web development, with a focus on JavaScript for over a decade. My background includes several years of PHP development in a startup environment, followed by 8+ years specializing in React and React Native.</span>
+                <span style="display: block;">I’m passionate about frontend development, consistently delivering clean, readable code while managing complex logic. I excel at maintaining a clear overview of large projects, meeting deadlines, and effectively collaborating with product owners and Scrum Masters to drive project success. I’m always eager to learn and embrace new technologies.</span>
+              </div>
+            </div>
+
+            <div data-reveal="experience" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 16px;">
+              <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; border-top: 1px solid var(--line); padding-top: 28px;">Work experience</div>
+              <div style="background: var(--accent-soft); border: 1px solid var(--accent-line); border-radius: 14px; padding: 20px 24px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap;"><span style="color: var(--ink); font-size: 15px;">Minze Health · Antwerp</span><span style="color: var(--accent); font-size: 12.5px;">Senior frontend developer</span><span style="color: var(--soft); font-size: 12px; margin-left: auto;">2025 – ongoing</span></div>
+                <div style="color: var(--muted); font-size: 13.5px; line-height: 1.7;">Appointed to lead the technical overhaul of Minze’s React Native apps. Successfully migrated legacy codebases to modern architectures while maintaining a rapid release cycle. Balanced the delivery of new business requirements with essential refactoring to ensure long-term stability and scalability, all within a highly regulated compliance environment.</div>
+                <div style="display: flex; gap: 18px;"><a href="https://play.google.com/store/apps/details?id=com.minze.therapy&amp;hl=en" target="_blank" style="font-size: 12.5px; border-bottom: 1px solid currentColor;">Minze Therapy on Google Play ↗</a></div>
+              </div>
+              <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap;"><span style="color: var(--ink); font-size: 15px;">icapps · Antwerp</span><span style="color: var(--accent); font-size: 12.5px;">Senior frontend developer</span><span style="color: var(--soft); font-size: 12px; margin-left: auto;">2015 – 2024</span></div>
+                <div style="color: var(--muted); font-size: 13.5px; line-height: 1.7;">At icapps, I transitioned from a junior developer to a frontend specialist, honing my skills in writing clean, efficient code. I contributed my expertise to support the team’s direction and consistently provided assistance to colleagues, fostering a collaborative environment.</div>
+              </div>
+              <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap;"><span style="color: var(--ink); font-size: 15px;">VisionLine · Sint-Katelijne-Waver</span><span style="color: var(--accent); font-size: 12.5px;">Full stack developer</span><span style="color: var(--soft); font-size: 12px; margin-left: auto;">2013 – 2015</span></div>
+                <div style="color: var(--muted); font-size: 13.5px; line-height: 1.7;">Worked at VisionLine, a startup in the real estate sector, where I developed and maintained in-house B2B software and various web applications. Primarily responsible for backend development and frontend integration using PHP, JavaScript, and MySQL. Collaborated closely with a small team to deliver efficient, tailored solutions.</div>
+              </div>
+              <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px 24px; display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap;"><span style="color: var(--ink); font-size: 15px;">Sakti · Lier</span><span style="color: var(--accent); font-size: 12.5px;">Owner — Frontend development</span><span style="color: var(--soft); font-size: 12px; margin-left: auto;">2012 – current</span></div>
+                <div style="color: var(--muted); font-size: 13.5px; line-height: 1.7;">Founded Sakti as a student to provide professional web development services for small businesses, allowing me to manage client projects and issue invoices. Over the years, I’ve continued to maintain these websites, using the business as a platform to learn and experiment with new technologies in a professional context.</div>
+              </div>
+            </div>
+
+            <div data-reveal="projects" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 12px;">
+              <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; border-top: 1px solid var(--line); padding-top: 28px;">Featured projects — click one to open its case study</div>
+              <div onClick="{{ openP0 }}" style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; min-height: 44px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer;" style-hover="border-color: var(--accent); transform: translateX(4px)">
+                <div style="display: flex; flex-direction: column; gap: 4px;"><span style="color: var(--ink); font-size: 15px;">Mijn Antwerpen</span><span style="color: var(--muted); font-size: 12.5px;">The city of Antwerp in every resident’s pocket</span></div>
+                <span style="color: var(--soft); font-size: 11.5px; flex: none;">React Native · lead</span>
+              </div>
+              <div onClick="{{ openP1 }}" style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; min-height: 44px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer;" style-hover="border-color: var(--accent); transform: translateX(4px)">
+                <div style="display: flex; flex-direction: column; gap: 4px;"><span style="color: var(--ink); font-size: 15px;">SP Expert Connect</span><span style="color: var(--muted); font-size: 12.5px;">HR platform — one shared codebase for web + app</span></div>
+                <span style="color: var(--soft); font-size: 11.5px; flex: none;">React &amp; RN · lead</span>
+              </div>
+              <div onClick="{{ openP2 }}" style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; min-height: 44px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer;" style-hover="border-color: var(--accent); transform: translateX(4px)">
+                <div style="display: flex; flex-direction: column; gap: 4px;"><span style="color: var(--ink); font-size: 15px;">Keytrade</span><span style="color: var(--muted); font-size: 12.5px;">A complete native banking app rebuilt in React Native</span></div>
+                <span style="color: var(--soft); font-size: 11.5px; flex: none;">React &amp; RN</span>
+              </div>
+              <div onClick="{{ openP3 }}" style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; min-height: 44px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer;" style-hover="border-color: var(--accent); transform: translateX(4px)">
+                <div style="display: flex; flex-direction: column; gap: 4px;"><span style="color: var(--ink); font-size: 15px;">Lutastic+</span><span style="color: var(--muted); font-size: 12.5px;">Hardware-connected app — BLE, Skia, Expo</span></div>
+                <span style="color: var(--soft); font-size: 11.5px; flex: none;">React Native · lead</span>
+              </div>
+              <div onClick="{{ openP4 }}" style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; min-height: 44px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; gap: 16px; cursor: pointer;" style-hover="border-color: var(--accent); transform: translateX(4px)">
+                <div style="display: flex; flex-direction: column; gap: 4px;"><span style="color: var(--ink); font-size: 15px;">Adminno4Pro</span><span style="color: var(--muted); font-size: 12.5px;">Real-estate management, tailored to commercial property</span></div>
+                <span style="color: var(--soft); font-size: 11.5px; flex: none;">PHP · lead</span>
+              </div>
+              <div style="color: var(--soft); font-size: 12.5px; line-height: 1.7; padding-top: 4px;">Others: Uitpas, Cashfree, Belgian Economic Mission, Mobility Masters, Essent, Clearfacts, Slim Naar Antwerpen, Sibelga, …</div>
+            </div>
+
+            <div data-reveal="skills" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 14px;">
+              <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; border-top: 1px solid var(--line); padding-top: 28px;">Skills</div>
+              <div style="display: flex; gap: 9px; flex-wrap: wrap;">
+                <span style="background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 7px 14px; border-radius: 999px;">Javascript / Typescript</span>
+                <span style="background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 7px 14px; border-radius: 999px;">React</span>
+                <span style="background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 7px 14px; border-radius: 999px;">React Native</span>
+                <span style="background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 7px 14px; border-radius: 999px;">HTML / (s)css</span>
+                <span style="background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 7px 14px; border-radius: 999px;">Git</span>
+                <span style="background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 7px 14px; border-radius: 999px;">Devops</span>
+                <span style="background: var(--card); border: 1px solid var(--line); color: var(--muted); font-size: 12.5px; padding: 7px 14px; border-radius: 999px;">Application Architecture</span>
+              </div>
+            </div>
+
+            <div data-reveal="education" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 14px;">
+              <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; border-top: 1px solid var(--line); padding-top: 28px;">Education</div>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <div style="background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; flex: 1; min-width: 240px;">
+                  <div style="color: var(--ink); font-size: 14px;">Master — Elektronica-ICT</div>
+                  <div style="color: var(--soft); font-size: 12px; margin-top: 5px;">Thomas More · De Nayer Instituut — completed 2013</div>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; flex: 1; min-width: 240px;">
+                  <div style="color: var(--ink); font-size: 14px;">Prof. Bachelor — Elektronica-ICT</div>
+                  <div style="color: var(--soft); font-size: 12px; margin-top: 5px;">Thomas More · De Nayer Instituut — completed 2011</div>
+                </div>
+              </div>
+            </div>
+
+            <div data-reveal="facts" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 14px;">
+              <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; border-top: 1px solid var(--line); padding-top: 28px;">Quick facts</div>
+              <div style="color: var(--muted); font-size: 13.5px;">Married · Father of 2 · Runner · Sports lover</div>
+            </div>
+
+            <div data-reveal="contact" style="opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; display: flex; flex-direction: column; gap: 14px; padding-bottom: 24px;">
+              <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; border-top: 1px solid var(--line); padding-top: 28px;">Contact</div>
+              <div style="display: flex; gap: 22px; flex-wrap: wrap; align-items: baseline;">
+                <a href="mailto:vercammenjasper@gmail.com" style="font-size: 14px; border-bottom: 1px solid currentColor;">vercammenjasper@gmail.com</a>
+                <a href="tel:+32497305798" style="font-size: 14px;">+32 497 30 57 98</a>
+                <span style="color: var(--soft); font-size: 13px;">2500 Lier, Belgium</span>
+              </div>
+              <div style="color: var(--soft); font-size: 11.5px;">Built with React — obviously.</div>
+            </div>
+          </div>
+
+          <sc-if value="{{ hasOpen }}" hint-placeholder-val="{{ false }}">
+            <div data-screen-label="Case study" style="position: absolute; inset: 0; background: var(--bg); overflow-y: auto; padding: var(--pane-pad); box-sizing: border-box; animation: riseIn 0.3s ease; display: flex; flex-direction: column; gap: 26px;">
+              <div>
+                <button onClick="{{ closeProject }}" style="background: none; border: 1px solid var(--chipline); color: var(--muted); font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 10px 18px; border-radius: 8px; cursor: pointer; min-height: 44px;" style-hover="border-color: var(--accent); color: var(--accent)">← close()</button>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="font-family: 'Instrument Serif', serif; font-size: 46px; color: var(--ink); line-height: 1.05;">{{ openTitle }}</div>
+                <div style="color: var(--accent); font-size: 14px;">{{ openRole }}</div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-top: 6px;">
+                  <span style="color: var(--soft); font-size: 11.5px;">built at</span>
+                  <div title="{{ openCompanyName }}" style="width: {{ openLogoW }}; height: 22px; background: var(--muted); -webkit-mask: url('{{ openLogo }}') no-repeat left center / contain; mask: url('{{ openLogo }}') no-repeat left center / contain;"></div>
+                  <span style="color: var(--soft); font-size: 11.5px;">{{ openYears }}</span>
+                </div>
+                <div style="display: flex; gap: 18px; flex-wrap: wrap; margin-top: 4px;">
+                  <sc-for list="{{ openLinks }}" as="l" hint-placeholder-count="0">
+                    <a href="{{ l.href }}" target="_blank" style="font-size: 13px; border-bottom: 1px solid currentColor;">{{ l.label }} ↗</a>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px; max-width: 640px;">
+                <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">What</div>
+                <div style="color: var(--muted); font-size: 14px; line-height: 1.75;">{{ openWhat }}</div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 10px; max-width: 640px;">
+                <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">Tasks &amp; responsibilities</div>
+                <div style="color: var(--muted); font-size: 14px; line-height: 1.75;">{{ openTasks }}</div>
+              </div>
+              <sc-if value="{{ openHasMore }}" hint-placeholder-val="{{ false }}">
+                <div style="display: flex; flex-direction: column; gap: 10px; max-width: 640px;">
+                  <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">More</div>
+                  <div style="color: var(--muted); font-size: 14px; line-height: 1.75;">{{ openMore }}</div>
+                </div>
+              </sc-if>
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">Screenshots</div>
+                <sc-if value="{{ openHasShots }}" hint-placeholder-val="{{ false }}">
+                  <div style="display: flex; gap: 16px; flex-wrap: wrap;">{{ openShotsEls }}</div>
+                </sc-if>
+                <sc-if value="{{ openNoShots }}" hint-placeholder-val="{{ true }}">
+                  <div style="display: flex; gap: 14px; flex-wrap: wrap;">
+                    <image-slot id="shot-{{ openId }}-1" shape="rounded" radius="18" style="width: 175px; height: 370px;" placeholder="app screenshot 1"></image-slot>
+                    <image-slot id="shot-{{ openId }}-2" shape="rounded" radius="18" style="width: 175px; height: 370px;" placeholder="app screenshot 2"></image-slot>
+                    <image-slot id="shot-{{ openId }}-3" shape="rounded" radius="18" style="width: 175px; height: 370px;" placeholder="app screenshot 3"></image-slot>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 12px; padding-bottom: 32px;">
+                <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">Stack</div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                  <sc-for list="{{ openStack }}" as="s" hint-placeholder-count="3">
+                    <span style="background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent); font-size: 12.5px; padding: 6px 13px; border-radius: 999px;">{{ s }}</span>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <sc-if value="{{ confirmOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position: absolute; inset: 0; background: rgba(20, 15, 10, 0.4); display: flex; align-items: center; justify-content: center; z-index: 10;">
+          <div style="background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 30px 34px; max-width: 420px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 24px 70px rgba(0,0,0,0.3); animation: riseIn 0.25s ease;">
+            <div style="color: var(--soft); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase;">close();</div>
+            <div style="color: var(--ink); font-size: 15px; line-height: 1.6;">Are you sure you want to close without contacting me?</div>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+              <button onClick="{{ confirmNo }}" style="background: var(--accent); border: none; color: var(--bg); font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 12px 20px; border-radius: 8px; cursor: pointer; min-height: 44px;">no, stay</button>
+              <button onClick="{{ confirmYes }}" style="background: none; border: 1px solid #ff5f57; color: #ff5f57; font-family: 'IBM Plex Mono', monospace; font-size: 13px; padding: 12px 20px; border-radius: 8px; cursor: pointer; min-height: 44px;" style-hover="background: rgba(255, 95, 87, 0.1)">yes, close</button>
+            </div>
+            <a href="mailto:vercammenjasper@gmail.com" style="font-size: 12.5px;">or email me first ↗</a>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;typingSpeed&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 16, &quot;min&quot;: 4, &quot;max&quot;: 60, &quot;step&quot;: 2, &quot;unit&quot;: &quot;ms/char&quot;, &quot;section&quot;: &quot;Editor&quot;, &quot;tsType&quot;: &quot;number&quot;}, &quot;startInDark&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;section&quot;: &quot;Editor&quot;, &quot;tsType&quot;: &quot;boolean&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    let theme = null;
+    try { theme = localStorage.getItem('jv-theme'); } catch (e) {}
+    if (!theme) theme = (props.startInDark ? 'dark' : 'light');
+    this.state = {
+      isMobile: typeof window !== 'undefined' && window.innerWidth <= 820,
+      theme, open: null, sheetOpen: true,
+      winMode: 'normal', minimized: false, closed: false, confirmOpen: false,
+    };
+    ['rootRef', 'typeRef', 'progressRef', 'paneRef', 'codeBoxRef'].forEach(k => { this[k] = React.createRef(); });
+    this._typed = ''; this._i = 0; this._done = false;
+    this.CODE = 'const jasper = {\n  name: "Jasper Vercammen",\n  role: "Senior Frontend Developer",\n  base: "2500 Lier, Belgium",\n  focus: ["web", "mobile"],\n};\n\nrender(<Hero {...jasper} />);\nrender(<Profile years={12} />);\nrender(<Experience at={[\n  "Minze Health",\n  "icapps",\n  "VisionLine",\n  "Sakti",\n]} />);\nrender(<Projects featured={4} />);\nrender(<Skills />);\nrender(<Education school="Thomas More" />);\nrender(<QuickFacts kids={2} runner />);\nrender(<Contact email="vercammenjasper@gmail.com" />);\n\n// ✓ compiled — session stays open';
+    const marks = [
+      ['hero', 'render(<Hero {...jasper} />);'],
+      ['profile', 'render(<Profile years={12} />);'],
+      ['experience', '"Sakti",\n]} />);'],
+      ['projects', 'render(<Projects featured={4} />);'],
+      ['skills', 'render(<Skills />);'],
+      ['education', '"Thomas More" />);'],
+      ['facts', 'kids={2} runner />);'],
+      ['contact', 'vercammenjasper@gmail.com" />);'],
+    ];
+    this._markPos = {};
+    marks.forEach(([n, s]) => { this._markPos[n] = this.CODE.indexOf(s) + s.length; });
+    this.projects = [
+      { id: 'mijn-antwerpen', title: 'Mijn Antwerpen', role: 'React Native — Lead frontend developer',
+        what: 'With this app residents of Antwerp can make appointments, request documents and send messages to the city, save points and exchange them for benefits, discover interesting activities, consult a map with important locations in the city and receive relevant updates (news, appointments, reminders, …).',
+        tasks: 'Front-end development. Architecture of the application. Designing and setup of the CI/CD. Integration of an authentication system throughout the application and in multiple webviews in the app. Make it secure and robust. WCAG AA implementation.',
+        stack: ['React', 'React Native', 'TypeScript', 'Webviews', 'Mapbox', 'NFC', 'beacons', 'Jenkins', 'Jira'],
+        shots: ['mijn-antwerpen-1.webp', 'mijn-antwerpen-2.webp', 'mijn-antwerpen-3.webp', 'mijn-antwerpen-4.webp'], shotAspect: 'phone',
+        links: [
+          { label: 'App Store', href: 'https://apps.apple.com/us/app/mijn-antwerpen/id1642896636' },
+          { label: 'Google Play', href: 'https://play.google.com/store/search?q=mijn+antwerpen&c=apps&hl=en' },
+        ] },
+      { id: 'sp-expert-connect', title: 'SP Expert Connect', role: 'React & React Native — Lead frontend developer',
+        what: 'SP Expert Connect is an HR application where employees can check their roster, vacation, shift-swaps and company resources. They can request vacation and shift swaps, or chat with each other. We made both an app and a web version of the platform.',
+        tasks: 'Front-end development. Architecture of the application, managing the CI/CD. Setup shared layer between web and app. Setup shared component library between different web apps. Wrote a chat functionality via websockets.',
+        stack: ['React', 'React Native', 'TypeScript', 'Redux', 'Redux Observable', 'Websockets', 'SCSS', 'Jenkins', 'Jest', 'Detox', 'Cypress'],
+        links: [
+          { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.sp_expert_connect.app&hl=en' },
+        ] },
+      { id: 'keytrade', title: 'Keytrade', role: 'React & React Native — Frontend developer',
+        what: 'We replace the complete native banking application of Keytrade. The project included a POC with basic functionalities, redesign from scratch and provided native bridges for Vasco. The app comes with graphs, gestures and performance optimisations all in React Native. It’s also tablet ready. The project was rounded in about 1 year.',
+        tasks: 'Front-end development. Architecture of the application and data flow/management in the app. Implemented several security functions. Native module bridging.',
+        more: 'Made the Keyhome platform, the online mortgage tool of Keytrade. Helped on the secure banking environment.',
+        stack: ['React', 'React Native', 'Redux', 'Jenkins', 'Javascript', 'Jest', 'Enzyme', 'scss'],
+        links: [
+          { label: 'App Store', href: 'https://apps.apple.com/be/app/keytrade-bank/id640974593' },
+          { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=be.keytradebank.phone&hl=en' },
+          { label: 'Keyhome', href: 'https://www.keytradebank.be/node/frontend/en/keyhome/simulation/' },
+        ] },
+      { id: 'lutastic-plus', title: 'Lutastic+', role: 'React Native — Lead frontend developer', company: 'Minze Health',
+        what: 'A hardware-connected companion app built with Expo, talking to the device over Bluetooth Low Energy, with Skia-driven visuals.',
+        tasks: 'Front-end development. Architecture of the application. Designing and setup of the CI/CD. Move from Jenkins to GitHub Actions. Migration from existing redux/sagas to more modern approach. Stabilize bluetooth connection with the hardware side. Make it secure and robust.',
+        stack: ['React', 'React Native', 'Expo', 'TypeScript', 'Skia', 'Redux', 'BLE', 'Jenkins', 'Github'],
+        links: [
+          { label: 'App Store', href: 'https://apps.apple.com/us/app/lutastic/id6651840803' },
+        ] },
+      { id: 'adminno4pro', title: 'Adminno4Pro', role: 'PHP — Lead developer, frontend & backend', company: 'VisionLine', years: '2013 – 2015',
+        what: 'Adminno4pro is a real-estate management package tailored to commercial property. With the Adminno4pro package you can effortlessly manage your agency’s portfolio. Various handy features such as the agenda, task management, prospecting functions and more make it possible to organize your administration effortlessly.',
+        tasks: 'Design and development of new features. Maintenance of the existing web app. Responsible for, among other things, implementing a custom agenda and a full-featured todo list. Extending existing features from A to Z (from database to frontend development).',
+        stack: ['PHP', 'MySQL', 'Illustrator', 'Javascript', 'jQuery', 'Google PHP SDK', 'Grunt'],
+        shots: ['adminno-portfolio.png', 'adminno-agenda.png'] },
+    ];
+  }
+  componentDidMount() {
+    this._mq = window.matchMedia('(max-width: 820px)');
+    this._onMq = (e) => this.setState({ isMobile: e.matches });
+    this._mq.addEventListener('change', this._onMq);
+    this.applyVars();
+    const speed = this.props.typingSpeed ?? 16;
+    this._timer = setInterval(() => {
+      this._i += 1;
+      this._typed = this.CODE.slice(0, this._i);
+      if (this._i >= this.CODE.length) { this._done = true; clearInterval(this._timer); }
+      this.paint();
+    }, speed);
+  }
+  componentWillUnmount() {
+    if (this._timer) clearInterval(this._timer);
+    if (this._appendT) clearInterval(this._appendT);
+    if (this._mq) this._mq.removeEventListener('change', this._onMq);
+  }
+  componentDidUpdate() { this.applyVars(); this.paint(); }
+  applyVars() {
+    const r = this.rootRef.current; if (!r) return;
+    const light = { '--bg': '#faf6ef', '--desk': '#eee7d9', '--code-bg': '#f4eee1', '--ink': '#1c1712', '--muted': '#6f6455', '--soft': '#a3937c', '--line': '#e7ddcd', '--card': '#ffffff', '--accent': 'oklch(0.55 0.14 18)', '--accent-soft': 'oklch(0.6 0.14 18 / 0.08)', '--accent-line': 'oklch(0.6 0.14 18 / 0.3)', '--code-text': '#3d3427', '--chipline': '#d8cbb4' };
+    const dark = { '--bg': '#16120e', '--desk': '#0c0906', '--code-bg': '#100d09', '--ink': '#f2eade', '--muted': '#a99c8c', '--soft': '#7d7060', '--line': '#2c2620', '--card': '#1f1a14', '--accent': 'oklch(0.75 0.13 18)', '--accent-soft': 'oklch(0.75 0.13 18 / 0.1)', '--accent-line': 'oklch(0.75 0.13 18 / 0.35)', '--code-text': '#d8cbb4', '--chipline': '#4a4136' };
+    const pal = this.state.theme === 'dark' ? dark : light;
+    Object.entries(pal).forEach(([k, v]) => r.style.setProperty(k, v));
+    const m = this.state.isMobile;
+    const cw = this.state.winMode === 'compactWin' && !m;
+    const compact = m || cw;
+    r.style.setProperty('--hero-size', compact ? '40px' : '64px');
+    r.style.setProperty('--pane-pad', compact ? '26px 22px 40px' : '48px 56px');
+    r.style.setProperty('--desk-pad', m ? '0' : '20px');
+    r.style.setProperty('--win-w', m ? '100%' : (cw ? '400px' : '1600px'));
+    r.style.setProperty('--win-h', cw ? 'min(820px, 100%)' : 'auto');
+    r.style.setProperty('--win-align', cw ? 'center' : 'stretch');
+    r.style.setProperty('--win-radius', m ? '0' : '16px');
+    r.style.setProperty('--win-border', m ? 'none' : '1px solid ' + pal['--line']);
+    r.style.setProperty('--win-shadow', m ? 'none' : '0 18px 60px rgba(20, 15, 10, 0.18)');
+    r.style.setProperty('--split-dir', compact ? 'column' : 'row');
+    r.style.setProperty('--term-order', compact ? '2' : '0');
+    r.style.setProperty('--term-w', compact ? '100%' : '40%');
+    r.style.setProperty('--term-max', compact ? 'none' : '520px');
+    r.style.setProperty('--term-h', compact ? (this.state.sheetOpen ? '200px' : '44px') : 'auto');
+    r.style.setProperty('--term-br', compact ? 'none' : '1px solid ' + pal['--line']);
+    r.style.setProperty('--term-bt', compact ? '1px solid ' + pal['--line'] : 'none');
+    r.style.setProperty('--term-cursor', compact ? 'pointer' : 'default');
+    document.body.style.background = pal['--desk'];
+  }
+  paint() {
+    const el = this.typeRef.current;
+    if (el && el.textContent !== this._typed) el.textContent = this._typed;
+    const box = this.codeBoxRef.current;
+    if (box && box.scrollHeight > box.clientHeight) {
+      const nearBottom = box.scrollTop + box.clientHeight >= box.scrollHeight - 60;
+      if (nearBottom || !this._done) box.scrollTop = box.scrollHeight;
+    }
+    const bar = this.progressRef.current;
+    if (bar) bar.style.width = Math.min(100, (this._i / this.CODE.length) * 100) + '%';
+    const pane = this.paneRef.current;
+    if (pane) pane.querySelectorAll('[data-reveal]').forEach(n => {
+      const at = this._markPos[n.getAttribute('data-reveal')];
+      const show = at !== undefined && this._i >= at;
+      n.style.opacity = show ? '1' : '0';
+      n.style.transform = show ? 'none' : 'translateY(12px)';
+    });
+  }
+  skip() {
+    if (this._done) return;
+    clearInterval(this._timer);
+    this._i = this.CODE.length; this._typed = this.CODE; this._done = true;
+    this.paint();
+  }
+  typeLine(line) {
+    if (!this._done) return;
+    if (this._appendT) clearInterval(this._appendT);
+    const base = this._typed + '\n';
+    let j = 0;
+    this._appendT = setInterval(() => {
+      j += 1;
+      this._typed = base + line.slice(0, j);
+      if (j >= line.length) clearInterval(this._appendT);
+      this.paint();
+    }, 12);
+  }
+  openProject(i) {
+    const p = this.projects[i];
+    this.setState({ open: p });
+    this.typeLine('open(<CaseStudy id="' + p.id + '" />);');
+  }
+  renderVals() {
+    const o = this.state.open;
+    const st = this.state;
+    return {
+      rootRef: this.rootRef, typeRef: this.typeRef, progressRef: this.progressRef,
+      paneRef: this.paneRef, codeBoxRef: this.codeBoxRef,
+      showWindow: !st.minimized && !st.closed,
+      showChrome: !st.isMobile,
+      minimized: st.minimized, closed: st.closed, confirmOpen: st.confirmOpen,
+      winTitle: st.winMode === 'compactWin' ? 'mobile preview' : 'live preview',
+      greenIconPath: st.winMode === 'compactWin'
+        ? 'M1 1 L4.4 1 L1 4.4 Z M7 7 L3.6 7 L7 3.6 Z'
+        : 'M3.8 3.8 L3.8 0.2 L0.2 3.8 Z M4.2 4.2 L4.2 7.8 L7.8 4.2 Z',
+      themeLabel: st.theme === 'light' ? 'dark' : 'light',
+      toggleTheme: (e) => {
+        if (e && e.stopPropagation) e.stopPropagation();
+        const t = st.theme === 'light' ? 'dark' : 'light';
+        try { localStorage.setItem('jv-theme', t); } catch (err) {}
+        this.setState({ theme: t });
+        this.typeLine('theme.set("' + t + '");');
+      },
+      skip: () => this.skip(),
+      termHeaderClick: () => {
+        if (st.isMobile || st.winMode === 'compactWin') this.setState(s => ({ sheetOpen: !s.sheetOpen }));
+      },
+      greenToggle: () => {
+        const next = st.winMode === 'compactWin' ? 'normal' : 'compactWin';
+        this.setState({ winMode: next });
+        this.typeLine('window.resize("' + (next === 'compactWin' ? 'mobile' : 'desktop') + '");');
+      },
+      minimizeWin: () => { this.setState({ minimized: true }); },
+      restoreWin: () => { this.setState({ minimized: false, closed: false }); },
+      askClose: () => this.setState({ confirmOpen: true }),
+      confirmYes: () => this.setState({ closed: true, confirmOpen: false }),
+      confirmNo: () => this.setState({ confirmOpen: false }),
+      openP0: () => this.openProject(0), openP1: () => this.openProject(1),
+      openP2: () => this.openProject(2), openP3: () => this.openProject(3),
+      openP4: () => this.openProject(4),
+      closeProject: () => { this.setState({ open: null }); this.typeLine('close();'); },
+      hasOpen: !!o,
+      openTitle: o ? o.title : '', openRole: o ? o.role : '',
+      openWhat: o ? o.what : '', openTasks: o ? o.tasks : '',
+      openMore: o && o.more ? o.more : '', openHasMore: !!(o && o.more),
+      openStack: o ? o.stack : [],
+      openId: o ? o.id : 'none',
+      openCompanyName: o ? (o.company ?? 'icapps') : '',
+      openLogo: o ? ({ 'Minze Health': 'minze-logo.svg', 'VisionLine': 'visionline-logo.svg' }[o.company] ?? 'icapps-logo.svg') : '',
+      openLogoW: o ? ({ 'Minze Health': '75px', 'VisionLine': '160px' }[o.company] ?? '114px') : '0',
+      openShots: o && o.shots ? o.shots : [],
+      openHasShots: !!(o && o.shots),
+      openNoShots: !!(o && !o.shots),
+      openShotsEls: o && o.shots ? o.shots.map((s, i) => React.createElement('img', {
+        key: s, src: s, alt: 'Screenshot ' + (i + 1),
+        style: { width: o.shotAspect === 'phone' ? '190px' : '100%', maxWidth: '560px', borderRadius: '12px', border: '1px solid var(--line)', display: 'block', height: 'fit-content' },
+      })) : null,
+      openYears: o && o.years ? o.years : '',
+      openLinks: o && o.links ? o.links : [],
+    };
+  }
+}
+</script>
+</body>
+</html>
