@@ -651,6 +651,11 @@ p {
   color: var(--accent);
 }
 
+.chip--link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
 .edu-grid {
   display: flex;
   gap: 12px;

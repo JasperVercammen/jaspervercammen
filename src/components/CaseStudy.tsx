@@ -84,11 +84,23 @@ export function CaseStudy({ project, onClose }: Props) {
         <div className="cs-stack">
           <h3 className="label">Stack</h3>
           <div className="chip-row">
-            {project.stack.map((item) => (
-              <span key={item} className="chip chip--accent">
-                {item}
-              </span>
-            ))}
+            {project.stack.map((item) =>
+              typeof item === 'string' ? (
+                <span key={item} className="chip chip--accent">
+                  {item}
+                </span>
+              ) : (
+                <a
+                  key={item.label}
+                  className="chip chip--accent chip--link"
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {item.label} ↗
+                </a>
+              ),
+            )}
           </div>
         </div>
       )}
