@@ -21,20 +21,27 @@ export function CaseStudy({ project, onClose }: Props) {
       <div className="case-study__head">
         <h2 className="case-study__title">{project.title}</h2>
         {project.role && <div className="case-study__role">{project.role}</div>}
-        <div className="built-at">
-          <span className="built-at__label">built at</span>
-          <div
-            className="built-at__logo"
-            role="img"
-            aria-label={company.name}
-            style={{ '--logo': `url(${company.logo})`, '--logo-w': company.logoWidth } as CSSProperties}
-          />
-          {project.years && <span className="built-at__years">{project.years}</span>}
-          {project.status && (
-            <span className="built-at__status">
-              <span className={`status status--${project.status}`} aria-hidden="true" />
-              {project.status === 'live' ? 'still live' : 'no longer live'}
-            </span>
+        <div className="built-at-block">
+          <div className="built-at">
+            <span className="built-at__label">built at</span>
+            <div
+              className="built-at__logo"
+              role="img"
+              aria-label={company.name}
+              style={{ '--logo': `url(${company.logo})`, '--logo-w': company.logoWidth } as CSSProperties}
+            />
+          </div>
+          {(project.years || project.status) && (
+            <div className="built-at__meta">
+              {project.years && <span>{project.years}</span>}
+              {project.years && project.status && <span aria-hidden="true">·</span>}
+              {project.status && (
+                <span className="built-at__status">
+                  <span className={`status status--${project.status}`} aria-hidden="true" />
+                  {project.status === 'live' ? 'still live' : 'no longer live'}
+                </span>
+              )}
+            </div>
           )}
         </div>
         {project.links && (

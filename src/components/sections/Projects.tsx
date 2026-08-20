@@ -50,9 +50,17 @@ export function Projects({ revealed, onOpenProject }: Props) {
           </div>
         )
       })}
-      <p className="legend">
-        <span className="legend__star">★</span> the ones I’m proudest of
-      </p>
+      <div className="legend">
+        <span className="legend__item">
+          <span className="legend__star">★</span> the ones I’m proudest of
+        </span>
+        <span className="legend__item">
+          <span className="status status--live" /> still live
+        </span>
+        <span className="legend__item">
+          <span className="status status--retired" /> no longer live
+        </span>
+      </div>
       <p className="others">{OTHER_PROJECTS}</p>
     </Section>
   )
