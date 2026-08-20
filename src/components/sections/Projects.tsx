@@ -18,7 +18,17 @@ export function Projects({ revealed, onOpenProject }: Props) {
               </span>
             )}
             <span className="project-card__main">
-              <span className="project-card__title">{project.title}</span>
+              <span className="project-card__title">
+                {project.title}
+                {project.status && (
+                  <span
+                    className={`status status--${project.status}`}
+                    role="img"
+                    aria-label={project.status === 'live' ? 'Still live' : 'No longer live'}
+                    title={project.status === 'live' ? 'Still live' : 'No longer live'}
+                  />
+                )}
+              </span>
               {project.tagline && <span className="project-card__tagline">{project.tagline}</span>}
             </span>
             {(project.tag || project.years) && (

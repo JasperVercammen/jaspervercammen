@@ -30,6 +30,12 @@ export function CaseStudy({ project, onClose }: Props) {
             style={{ '--logo': `url(${company.logo})`, '--logo-w': company.logoWidth } as CSSProperties}
           />
           {project.years && <span className="built-at__years">{project.years}</span>}
+          {project.status && (
+            <span className="built-at__status">
+              <span className={`status status--${project.status}`} aria-hidden="true" />
+              {project.status === 'live' ? 'still live' : 'no longer live'}
+            </span>
+          )}
         </div>
         {project.links && (
           <div className="links-row">

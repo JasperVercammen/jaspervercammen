@@ -786,6 +786,32 @@ p {
   mask: var(--logo) no-repeat left center / contain;
 }
 
+.status {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 9px;
+  border-radius: 50%;
+  background: var(--green);
+  vertical-align: 1px;
+}
+
+.status--retired {
+  background: none;
+  border: 1px solid var(--soft);
+}
+
+.built-at__status {
+  color: var(--soft);
+  font-size: 11.5px;
+}
+
+.built-at__status .status {
+  margin-right: 6px;
+  margin-left: 0;
+  vertical-align: 0;
+}
+
 .links-row {
   display: flex;
   gap: 18px;
