@@ -789,6 +789,11 @@ p {
   gap: 10px;
 }
 
+.built-at__name {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 .built-at__meta {
   display: flex;
   align-items: center;

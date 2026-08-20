@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react'
-import { COMPANIES } from '../data/assets'
+import { COMPANIES, type Company } from '../data/assets'
 import type { Project } from '../data/projects'
 
 type Props = {
@@ -8,7 +8,7 @@ type Props = {
 }
 
 export function CaseStudy({ project, onClose }: Props) {
-  const company = COMPANIES[project.company]
+  const company: Company = COMPANIES[project.company]
 
   return (
     <div className="case-study">
@@ -24,12 +24,16 @@ export function CaseStudy({ project, onClose }: Props) {
         <div className="built-at-block">
           <div className="built-at">
             <span className="built-at__label">built at</span>
-            <div
-              className="built-at__logo"
-              role="img"
-              aria-label={company.name}
-              style={{ '--logo': `url(${company.logo})`, '--logo-w': company.logoWidth } as CSSProperties}
-            />
+            {company.logo ? (
+              <div
+                className="built-at__logo"
+                role="img"
+                aria-label={company.name}
+                style={{ '--logo': `url(${company.logo})`, '--logo-w': company.logoWidth } as CSSProperties}
+              />
+            ) : (
+              <span className="built-at__name">{company.name}</span>
+            )}
           </div>
           {(project.years || project.status) && (
             <div className="built-at__meta">
@@ -38,7 +42,7 @@ export function CaseStudy({ project, onClose }: Props) {
               {project.status && (
                 <span className="built-at__status">
                   <span className={`status status--${project.status}`} aria-hidden="true" />
-                  {project.status === 'live' ? 'still live' : 'no longer live'}
+                  {project.status === 'live' ? 'active' : 'not active'}
                 </span>
               )}
             </div>

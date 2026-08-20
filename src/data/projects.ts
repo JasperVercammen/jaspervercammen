@@ -13,6 +13,11 @@ import {
   mijnAntwerpen4,
   mobilityMasters1,
   mobilityMasters2,
+  bemission1,
+  bemission2,
+  bemission3,
+  bemission4,
+  avsLier1,
   type CompanyId,
 } from './assets'
 
@@ -55,6 +60,21 @@ export const PROJECTS: Project[] = [
     links: [{ label: 'App Store', href: 'https://apps.apple.com/us/app/lutastic/id6651840803' }],
   },
   {
+    id: 'avs-lier',
+    title: 'AVS Lier',
+    tagline: 'A local heating and plumbing firm, online',
+    tag: 'WordPress',
+    role: 'Developer',
+    company: 'Sakti',
+    years: '2012 – 2013, 2026',
+    status: 'live',
+    what: 'AVS is the heating and plumbing business of Pieter Welens-Vrijdaghs in Lier — central heating, boilers and heat pumps, bathroom renovations, sanitary work, air conditioning and ventilation, for homeowners in and around the city. I built and still maintain their site.',
+    stack: ['HTML', 'WordPress', 'CSS', 'Javascript'],
+    shots: [avsLier1],
+    shotAspect: 'desktop',
+    links: [{ label: 'avs-lier.be', href: 'https://avs-lier.be' }],
+  },
+  {
     id: 'sibelga',
     title: 'Sibelga',
     tagline: 'The internal tool behind field work and inventory',
@@ -70,6 +90,19 @@ export const PROJECTS: Project[] = [
       'Websockets',
       'Responsive design',
     ],
+  },
+  {
+    id: 'uwe-porters',
+    title: 'Uwe Porters',
+    tagline: 'A midwife’s intimate-care brand and its shop',
+    tag: 'WordPress',
+    role: 'Developer',
+    company: 'Sakti',
+    years: '2024',
+    status: 'retired',
+    what: 'Uwe Porters is a Belgian midwife and author selling intimate wellness products alongside her books — a lubricant, a perineal oil — built as a shop around her own brand.',
+    stack: ['HTML', 'WordPress', 'CSS', 'Javascript'],
+    links: [{ label: 'uweporters.be', href: 'https://uweporters.be' }],
   },
   {
     id: 'mijn-antwerpen',
@@ -113,6 +146,18 @@ export const PROJECTS: Project[] = [
       { label: 'i18next', href: 'https://react.i18next.com/' },
       { label: 'React Navigation', href: 'https://reactnavigation.org/docs/getting-started' },
     ],
+  },
+  {
+    id: 'stadsapp-brugge',
+    title: 'Stadsapp Brugge',
+    tagline: 'City services for Bruges, from bin days to certificates',
+    tag: 'React Native',
+    role: 'React Native — Architect',
+    company: 'icapps',
+    years: '2023',
+    status: 'retired',
+    what: 'StadsApp Brugge is the fastest way to book an appointment or file a report, check your waste calendar, follow news and events, look up your library loans, request certificates and track open case files.',
+    stack: ['React Native', 'Jenkins'],
   },
   {
     id: 'keytrade-mobile',
@@ -189,6 +234,24 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    id: 'belgian-economic-mission',
+    title: 'Belgian Economic Mission',
+    tagline: 'Schedules, delegates and logistics for a trade mission',
+    tag: 'React Native · lead',
+    role: 'React Native — Architect & lead developer',
+    company: 'icapps',
+    years: '2018 – 2019',
+    status: 'live',
+    what: 'The Belgian Economic Mission app is the mobile tool the Belgian Foreign Trade Agency gives to participants of official state and regional economic trips. It carries the daily itinerary, visit locations and official meeting times, a directory for networking with the other business delegates and officials, and the practical side — travel guides, logistics and updates specific to the destination country.',
+    stack: ['React Native', 'Jenkins'],
+    shots: [bemission1, bemission2, bemission3, bemission4],
+    shotAspect: 'phone',
+    links: [
+      { label: 'App Store', href: 'https://apps.apple.com/us/app/bemission/id1449726069' },
+      { label: 'Google Play', href: 'https://play.google.com/store/apps/details?id=com.bemission.app&hl=en' },
+    ],
+  },
+  {
     id: 'keyhome',
     title: 'Keyhome',
     tagline: 'The first full online mortgage platform in Belgium',
@@ -246,4 +309,4 @@ export const PROJECTS: Project[] = [
   },
 ]
 
-export const OTHER_PROJECTS = 'Others: Cashfree, Belgian Economic Mission, Essent, …'
+export const OTHER_PROJECTS = 'Others: Cashfree, Essent, …'
