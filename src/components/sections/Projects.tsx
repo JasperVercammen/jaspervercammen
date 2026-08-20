@@ -18,10 +18,25 @@ export function Projects({ revealed, onOpenProject }: Props) {
               </span>
             )}
             <span className="project-card__main">
-              <span className="project-card__title">{project.title}</span>
+              <span className="project-card__title">
+                {project.title}
+                {project.status && (
+                  <span
+                    className={`status status--${project.status}`}
+                    role="img"
+                    aria-label={project.status === 'live' ? 'Still in production' : 'No longer in production'}
+                    title={project.status === 'live' ? 'Still in production' : 'No longer in production'}
+                  />
+                )}
+              </span>
               {project.tagline && <span className="project-card__tagline">{project.tagline}</span>}
             </span>
-            {project.tag && <span className="project-card__tag">{project.tag}</span>}
+            {(project.tag || project.years) && (
+              <span className="project-card__meta">
+                {project.tag && <span className="project-card__tag">{project.tag}</span>}
+                {project.years && <span className="project-card__year">{project.years}</span>}
+              </span>
+            )}
           </>
         )
 
@@ -35,9 +50,17 @@ export function Projects({ revealed, onOpenProject }: Props) {
           </div>
         )
       })}
-      <p className="legend">
-        <span className="legend__star">★</span> the ones I’m proudest of
-      </p>
+      <div className="legend">
+        <span className="legend__item">
+          <span className="legend__star">★</span> the ones I’m proudest of
+        </span>
+        <span className="legend__item">
+          <span className="status status--live" /> still in production
+        </span>
+        <span className="legend__item">
+          <span className="status status--retired" /> no longer in production
+        </span>
+      </div>
       <p className="others">{OTHER_PROJECTS}</p>
     </Section>
   )

@@ -597,11 +597,22 @@ p {
 
 .legend {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 8px;
+  gap: 6px 20px;
   padding-top: 4px;
   color: var(--soft);
   font-size: 12.5px;
+}
+
+.legend__item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+}
+
+.legend__item .status {
+  margin-left: 0;
 }
 
 .legend__star {
@@ -614,8 +625,17 @@ p {
   font-size: 12.5px;
 }
 
-.project-card__tag {
+.project-card__meta {
   flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+.project-card__tag,
+.project-card__year {
   color: var(--soft);
   font-size: 11.5px;
 }
@@ -756,11 +776,31 @@ p {
   font-size: 14px;
 }
 
+.built-at-block {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 6px;
+}
+
 .built-at {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 6px;
+}
+
+.built-at__name {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.built-at__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--soft);
+  font-size: 11.5px;
 }
 
 .built-at__label,
@@ -775,6 +815,32 @@ p {
   background: var(--muted);
   -webkit-mask: var(--logo) no-repeat left center / contain;
   mask: var(--logo) no-repeat left center / contain;
+}
+
+.status {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-left: 9px;
+  border-radius: 50%;
+  background: var(--green);
+  vertical-align: 1px;
+}
+
+.status--retired {
+  background: none;
+  border: 1px solid var(--soft);
+}
+
+.built-at__status {
+  color: var(--soft);
+  font-size: 11.5px;
+}
+
+.built-at__status .status {
+  margin-right: 6px;
+  margin-left: 0;
+  vertical-align: 0;
 }
 
 .links-row {
