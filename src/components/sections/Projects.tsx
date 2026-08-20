@@ -21,7 +21,12 @@ export function Projects({ revealed, onOpenProject }: Props) {
               <span className="project-card__title">{project.title}</span>
               {project.tagline && <span className="project-card__tagline">{project.tagline}</span>}
             </span>
-            {project.tag && <span className="project-card__tag">{project.tag}</span>}
+            {(project.tag || project.years) && (
+              <span className="project-card__meta">
+                {project.tag && <span className="project-card__tag">{project.tag}</span>}
+                {project.years && <span className="project-card__year">{project.years}</span>}
+              </span>
+            )}
           </>
         )
 
