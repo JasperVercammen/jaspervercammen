@@ -24,8 +24,8 @@ export function Projects({ revealed, onOpenProject }: Props) {
                   <span
                     className={`status status--${project.status}`}
                     role="img"
-                    aria-label={project.status === 'live' ? 'Active' : 'Not active'}
-                    title={project.status === 'live' ? 'Active' : 'Not active'}
+                    aria-label={project.status === 'live' ? 'Still in production' : 'No longer in production'}
+                    title={project.status === 'live' ? 'Still in production' : 'No longer in production'}
                   />
                 )}
               </span>
@@ -55,10 +55,10 @@ export function Projects({ revealed, onOpenProject }: Props) {
           <span className="legend__star">★</span> the ones I’m proudest of
         </span>
         <span className="legend__item">
-          <span className="status status--live" /> active
+          <span className="status status--live" /> still in production
         </span>
         <span className="legend__item">
-          <span className="status status--retired" /> not active
+          <span className="status status--retired" /> no longer in production
         </span>
       </div>
       <p className="others">{OTHER_PROJECTS}</p>

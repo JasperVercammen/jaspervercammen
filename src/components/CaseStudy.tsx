@@ -42,7 +42,7 @@ export function CaseStudy({ project, onClose }: Props) {
               {project.status && (
                 <span className="built-at__status">
                   <span className={`status status--${project.status}`} aria-hidden="true" />
-                  {project.status === 'live' ? 'active' : 'not active'}
+                  {project.status === 'live' ? 'still in production' : 'no longer in production'}
                 </span>
               )}
             </div>
