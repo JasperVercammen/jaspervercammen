@@ -707,6 +707,15 @@ p {
   font-size: 13.5px;
 }
 
+.facts__link {
+  color: inherit;
+  border-bottom: 1px dotted currentColor;
+}
+
+.facts__link:hover {
+  color: var(--accent);
+}
+
 .contact-row {
   display: flex;
   gap: 22px;

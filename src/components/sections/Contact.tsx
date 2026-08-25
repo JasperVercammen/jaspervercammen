@@ -9,6 +9,11 @@ export function Contact({ revealed }: { revealed: boolean }) {
           {PROFILE.email}
         </a>
         <a href={PROFILE.phoneHref}>{PROFILE.phone}</a>
+        {PROFILE.links.map((link) => (
+          <a key={link.href} className="link" href={link.href} target="_blank" rel="noreferrer">
+            {link.label} ↗
+          </a>
+        ))}
         <span className="contact-row__place">{PROFILE.location}</span>
       </div>
       <p className="footer-note">Built with React — obviously.</p>

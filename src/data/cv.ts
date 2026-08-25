@@ -5,6 +5,10 @@ export const PROFILE = {
   phone: "+32 497 30 57 98",
   phoneHref: "tel:+32497305798",
   location: "2500 Lier, Belgium",
+  links: [
+    { label: "GitHub", href: "https://github.com/JasperVercammen" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/jaspervercammen/" },
+  ],
   paragraphs: [
     "I have extensive experience in web development, with a focus on JavaScript for over a decade. My background includes several years of PHP development in a startup environment, followed by 12+ years specializing in React and React Native. I picked that JavaScript experience up in both consultancy and startup environments, taking on a different role in each — from hands-on developer to specialist and technical lead.",
     "I’m passionate about frontend development, consistently delivering clean, readable code while managing complex logic. I excel at maintaining a clear overview of large projects, meeting deadlines, and effectively collaborating with product owners and Scrum Masters to drive project success. I’m always eager to learn and embrace new technologies.",
@@ -87,5 +91,12 @@ export const EDUCATION = [
   },
 ];
 
-export const QUICK_FACTS =
-  "Married · Father of 2 · Runner · Hobby renovator · Sports lover";
+export type Fact = string | { label: string; href: string };
+
+export const QUICK_FACTS: Fact[] = [
+  "Married",
+  "Father of 2",
+  { label: "Runner", href: "https://running.jaspervercammen.be" },
+  "Hobby renovator",
+  "Sports lover",
+];
