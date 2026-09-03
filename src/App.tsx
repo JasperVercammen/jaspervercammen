@@ -1,14 +1,15 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { CaseStudy } from './components/CaseStudy'
 import { ConfirmDialog } from './components/ConfirmDialog'
 import { ContentPane } from './components/ContentPane'
 import { Terminal } from './components/Terminal'
 import { TitleBar } from './components/TitleBar'
 import { CODE, TYPING_SPEED, revealedCount } from './data/code'
+import { PROMPT, runCommand, type CommandContext } from './data/commands'
 import type { Project } from './data/projects'
 import { useMediaQuery } from './hooks/useMediaQuery'
 import { useTheme } from './hooks/useTheme'
-import { useTypewriter } from './hooks/useTypewriter'
+import { useTerminal } from './hooks/useTerminal'
 
 type WinMode = 'normal' | 'compactWin'
 
@@ -22,7 +23,13 @@ export function App() {
   const [sheetOpen, setSheetOpen] = useState(true)
   const [openProject, setOpenProject] = useState<Project | null>(null)
 
-  const { typed, done, progress, skip, typeLine } = useTypewriter(CODE, TYPING_SPEED)
+  const [history, setHistory] = useState<string[]>([])
+  const startedAt = useRef(Date.now()).current
+
+  const { transcript, introChars, done, progress, skip, typeLine, print, clear } = useTerminal(
+    CODE,
+    TYPING_SPEED,
+  )
 
   const compactWin = winMode === 'compactWin' && !isMobile
   const compact = isMobile || compactWin
@@ -51,6 +58,43 @@ export function App() {
     setOpenProject(null)
     typeLine('close();')
   }, [typeLine])
+
+  // commands echo the line the visitor typed, so they skip the animated echo
+  const showProjectQuiet = useCallback((project: Project) => setOpenProject(project), [])
+  const closeProjectQuiet = useCallback(() => setOpenProject(null), [])
+
+  const context: Omit<CommandContext, 'history'> = useMemo(
+    () => ({
+      print,
+      clear,
+      theme,
+      setTheme,
+      winMode,
+      setWinMode,
+      showProject: showProjectQuiet,
+      closeProject: closeProjectQuiet,
+      hasOpenProject: openProject !== null,
+      minimize: () => setMinimized(true),
+      askClose: () => setConfirmOpen(true),
+      openUrl: (url: string) => window.open(url, '_blank', 'noopener,noreferrer'),
+      startedAt,
+    }),
+    [print, clear, theme, setTheme, winMode, showProjectQuiet, closeProjectQuiet, openProject, startedAt],
+  )
+
+  const submitCommand = useCallback(
+    (input: string) => {
+      print(PROMPT + input)
+      if (input.trim()) setHistory((entries) => [...entries, input.trim()])
+      runCommand(input, { ...context, history })
+    },
+    [context, history, print],
+  )
+
+  useEffect(() => {
+    if (!done) return
+    typeLine('// this session is live — type help')
+  }, [done, typeLine])
 
   useEffect(() => {
     if (!confirmOpen && !openProject) return
@@ -99,17 +143,19 @@ export function App() {
 
           <div className="split">
             <Terminal
-              typed={typed}
+              transcript={transcript}
               done={done}
               progress={progress}
+              history={history}
               onSkip={skip}
+              onCommand={submitCommand}
               themeLabel={theme === 'light' ? 'dark' : 'light'}
               onToggleTheme={toggleTheme}
               onHeaderClick={compact ? () => setSheetOpen((open) => !open) : undefined}
             />
 
             <div className="content">
-              <ContentPane stage={revealedCount(typed.length)} onOpenProject={showProject} />
+              <ContentPane stage={revealedCount(introChars)} onOpenProject={showProject} />
               {openProject && <CaseStudy project={openProject} onClose={closeProject} />}
             </div>
           </div>
